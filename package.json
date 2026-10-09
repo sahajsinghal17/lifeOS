@@ -16,7 +16,8 @@
     "build:api": "npm run build --workspace=@lifeos/api",
     "start:api": "npm run start --workspace=@lifeos/api",
     "lint": "npm run lint:web && npm run lint:api",
-    "lint:api": "npm run lint --workspace=@lifeos/api"
+    "lint:api": "npm run lint --workspace=@lifeos/api",
+    "dev": "concurrently -k -n WEB,API -c blue,green \"npm run dev:web\" \"npm run dev:api\""
   },
   "dependencies": {
     "cors": "^2.8.6",
@@ -28,6 +29,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.4",
+    "concurrently": "^10.0.6",
     "eslint": "^10.12.0",
     "globals": "^17.13.0",
     "tsx": "^4.23.15",
