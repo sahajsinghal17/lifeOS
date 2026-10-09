@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import { env } from "./config/env.js";
+import { connectDatabase } from "./config/database.js";
 
 const app = express();
 
@@ -20,6 +21,17 @@ app.get("/api/v1/health", (_req, res) => {
   });
 });
 
-app.listen(env.PORT, () => {
-  console.log(`LifeOS API listening on port ${env.PORT}`);
-});
+async function startServer(): Promise<void> {
+  try {
+    await connectDatabase();
+
+    app.listen(env.PORT, () => {
+      console.log(`LifeOS API listening on port ${env.PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start LifeOS API:", error);
+    process.exit(1);
+  }
+}
+
+void startServer();
